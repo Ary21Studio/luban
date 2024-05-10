@@ -30,7 +30,7 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
     public DType Accept(TBool type, ExcelStream x)
     {
 
-        var d = x.Read();
+        var d = x.Read(type.IsNullable);
         if (CheckNull(type.IsNullable, d))
         {
             return null;
@@ -40,7 +40,7 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
 
     public DType Accept(TByte type, ExcelStream x)
     {
-        var d = x.Read();
+        var d = x.Read(type.IsNullable);
         if (CheckNull(type.IsNullable, d))
         {
             return null;
@@ -54,7 +54,7 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
 
     public DType Accept(TShort type, ExcelStream x)
     {
-        var d = x.Read();
+        var d = x.Read(type.IsNullable);
         if (CheckNull(type.IsNullable, d))
         {
             return null;
@@ -68,7 +68,7 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
 
     public DType Accept(TInt type, ExcelStream x)
     {
-        var d = x.Read();
+        var d = x.Read(type.IsNullable);
         if (CheckNull(type.IsNullable, d))
         {
             return null;
@@ -90,7 +90,7 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
 
     public DType Accept(TLong type, ExcelStream x)
     {
-        var d = x.Read();
+        var d = x.Read(type.IsNullable);
         if (CheckNull(type.IsNullable, d))
         {
             return null;
@@ -112,7 +112,7 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
 
     public DType Accept(TFloat type, ExcelStream x)
     {
-        var d = x.Read();
+        var d = x.Read(type.IsNullable);
         if (CheckNull(type.IsNullable, d))
         {
             return null;
@@ -126,7 +126,7 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
 
     public DType Accept(TDouble type, ExcelStream x)
     {
-        var d = x.Read();
+        var d = x.Read(type.IsNullable);
         if (CheckNull(type.IsNullable, d))
         {
             return null;
@@ -140,7 +140,7 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
 
     public DType Accept(TEnum type, ExcelStream x)
     {
-        var d = x.Read();
+        var d = x.Read(type.IsNullable);
         if (CheckNull(type.IsNullable, d))
         {
             return null;
@@ -154,7 +154,7 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
 
     public DType Accept(TString type, ExcelStream x)
     {
-        var d = x.Read();
+        var d = x.Read(type.IsNullable);
         var s = ParseString(d);
         if (s == null)
         {
@@ -188,7 +188,7 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
 
     public DType Accept(TDateTime type, ExcelStream x)
     {
-        var d = x.Read();
+        var d = x.Read(type.IsNullable);
         if (CheckNull(type.IsNullable, d))
         {
             return null;
@@ -268,12 +268,12 @@ class ExcelStreamDataCreator : ITypeFuncVisitor<ExcelStream, DType>
 
                     if (subType == FieldNames.BeanNullType)
                     {
-                        x.Read();
+                        x.Read(true);
                         return null;
                     }
                     else if (subType == FieldNames.BeanNotNullType || subType == originBean.Name)
                     {
-                        x.Read();
+                        x.Read(false);
                         //throw new Exception($"type:'{originBean.FullName}' 可空标识:'{subType}' 不合法（只能为{FieldNames.BeanNotNullType}或{FieldNames.BeanNullType}或{originBean.Name})");
                     }
                 }
